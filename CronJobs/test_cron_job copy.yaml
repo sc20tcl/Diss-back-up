@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: log-traffic-job
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: predictive-scaler
+          containers:
+          - name: log-traffic-container
+            image: tsregistry1234.azurecr.io/log-traffic:latest
+          imagePullSecrets:
+          - name: acr-auth  
+          restartPolicy: OnFailure

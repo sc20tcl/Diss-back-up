@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: predictive-scaler-job
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: predictive-scaler
+          containers:
+          - name: predictive-scaler-container
+            image: tsregistry1234.azurecr.io/predictive-scaler:latest
+          imagePullSecrets:
+          - name: acr-auth  
+          restartPolicy: OnFailure
